@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :request_comments
   resources :requests
   resources :image_comments
   resources :images

@@ -1,0 +1,2 @@
+class RequestCommentsController < ApplicationController
+end
