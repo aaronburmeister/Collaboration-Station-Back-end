@@ -10,10 +10,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_28_163918) do
+ActiveRecord::Schema.define(version: 2020_04_28_224509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "image_comments", force: :cascade do |t|
+    t.string "content"
+    t.bigint "user_id", null: false
+    t.bigint "image_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["image_id"], name: "index_image_comments_on_image_id"
+    t.index ["user_id"], name: "index_image_comments_on_user_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.string "imageURL"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_images_on_user_id"
+  end
+
+  create_table "request_comments", force: :cascade do |t|
+    t.string "content"
+    t.bigint "user_id", null: false
+    t.bigint "request_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["request_id"], name: "index_request_comments_on_request_id"
+    t.index ["user_id"], name: "index_request_comments_on_user_id"
+  end
+
+  create_table "requests", force: :cascade do |t|
+    t.string "title"
+    t.string "category"
+    t.string "description"
+    t.string "status"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_requests_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -29,4 +68,10 @@ ActiveRecord::Schema.define(version: 2020_04_28_163918) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "image_comments", "images"
+  add_foreign_key "image_comments", "users"
+  add_foreign_key "images", "users"
+  add_foreign_key "request_comments", "requests"
+  add_foreign_key "request_comments", "users"
+  add_foreign_key "requests", "users"
 end
