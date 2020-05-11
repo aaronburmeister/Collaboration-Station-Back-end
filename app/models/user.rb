@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  acts_as_token_authenticatable
   has_many :images
   has_many :image_comments
   has_many :requests
