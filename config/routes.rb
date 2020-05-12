@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   
-  resources :request_comments
-  resources :requests
-  resources :image_comments
-  resources :images
-  devise_for :users
+  scope :api, defaults: { format: :json } do
+    devise_for :users
+    resources :request_comments
+    resources :requests
+    resources :image_comments
+    resources :images
+  end
 end
